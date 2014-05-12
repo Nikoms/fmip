@@ -1,0 +1,4 @@
+nmc_dynamic_page:
+    resource: "@NmcDynamicPageBundle/Resources/config/routing.yml"
+    prefix:   /
+
