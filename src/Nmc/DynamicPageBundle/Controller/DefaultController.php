@@ -10,4 +10,8 @@ class DefaultController extends Controller
     {
         return $this->render('NmcDynamicPageBundle:Default:index.html.twig', array('name' => $name));
     }
+    public function pageAction($name)
+    {
+        return $this->render('NmcDynamicPageBundle:Default:index.html.twig', array('name' => $name));
+    }
 }

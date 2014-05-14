@@ -44,9 +44,28 @@ class RouteProvider implements RouteProviderInterface{
      */
     public function getRouteCollectionForRequest(Request $request)
     {
-        echo $request->getPathInfo();
-        exit('...getRouteCollectionForRequest');
-        // TODO: Implement getRouteCollectionForRequest() method.
+        $routeCollection = new RouteCollection();
+        foreach($this->getPages()['fr'] as $pageName => $config){
+            $routeCollection->add('fr_' . $pageName . '_',new Route('/fr/' . $pageName, array('_controller' => 'Nmc\DynamicPageBundle\Controller\DefaultController::pageAction') + $config));
+        }
+        foreach($this->getPages()['en'] as $pageName => $config){
+            $routeCollection->add('en_' . $pageName . '_',new Route('/en/' . $pageName, array('_controller' => 'Nmc\DynamicPageBundle\Controller\DefaultController::pageAction') + $config));
+        }
+        return $routeCollection;
+    }
+
+    private function getPages()
+    {
+        return array(
+            'fr' => array(
+                'ca' => array('name' => 'cool'),
+                'fonctionne' => array('name' => 'hahaha'),
+            ),
+            'en' => array(
+                'it' => array('name' => 'yeah'),
+                'works' => array('name' => 'moze ****'),
+            ),
+        );
     }
 
     /**
@@ -61,7 +80,10 @@ class RouteProvider implements RouteProviderInterface{
      */
     public function getRouteByName($name)
     {
-        //exit('getRouteByName ' . $name);
+        if(substr($name,0,1) === '_'){
+            throw new RouteNotFoundException();
+        }
+        exit('getRouteByName ' . $name);
         // TODO: Implement getRouteByName() method.
     }
 

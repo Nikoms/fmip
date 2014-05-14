@@ -18,7 +18,9 @@ class RequestListener
         if (HttpKernelInterface::MASTER_REQUEST != $event->getRequestType()) {
             return;
         }
+//        $event->getRequest()->attributes->set('_controller', 'Nmc\DynamicPageBundle\Controller\DefaultController::pageAction');
 //        echo $event->getRequest()->getHost();
+//        exit();
     }
 
 } 
