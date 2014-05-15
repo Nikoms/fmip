@@ -17,8 +17,10 @@ use Symfony\Component\Routing\RouteCollection;
 
 class RouteProvider implements RouteProviderInterface{
 
-    public function __construct()
+    private $websiteFinder;
+    public function __construct(WebsiteFinder $websiteFinder)
     {
+        $this->websiteFinder = $websiteFinder;
     }
     /**
      * Finds routes that may potentially match the request.
@@ -64,7 +66,7 @@ class RouteProvider implements RouteProviderInterface{
         return array(
             'fmip.git' => array(
                 'fr' => array(
-                    'ca' => array('name' => 'cool'),
+                    'ca' => array('name' => 'cool ' . $this->websiteFinder->getWebsite()->getTitle()),
                     'fonctionne' => array('name' => 'hahaha'),
                 ),
                 'en' => array(
