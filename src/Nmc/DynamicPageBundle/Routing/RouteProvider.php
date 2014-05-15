@@ -44,27 +44,46 @@ class RouteProvider implements RouteProviderInterface{
      */
     public function getRouteCollectionForRequest(Request $request)
     {
+        $pagesByHost = $this->getPagesByHost();
         $routeCollection = new RouteCollection();
-        foreach($this->getPages()['fr'] as $pageName => $config){
-            $routeCollection->add('fr_' . $pageName . '_',new Route('/fr/' . $pageName, array('_controller' => 'Nmc\DynamicPageBundle\Controller\DefaultController::pageAction') + $config));
+
+        if(!isset($pagesByHost[$request->getHost()])){
+            return $routeCollection;
         }
-        foreach($this->getPages()['en'] as $pageName => $config){
-            $routeCollection->add('en_' . $pageName . '_',new Route('/en/' . $pageName, array('_controller' => 'Nmc\DynamicPageBundle\Controller\DefaultController::pageAction') + $config));
+
+        foreach($pagesByHost[$request->getHost()] as $locale => $pages){
+            foreach($pages as $pageName => $config){
+                $routeCollection->add($locale . '_' . $pageName,new Route('/' . $locale . '/' . $pageName, array('_controller' => 'Nmc\DynamicPageBundle\Controller\DefaultController::pageAction') + $config));
+            }
         }
         return $routeCollection;
     }
 
-    private function getPages()
+    private function getPagesByHost()
     {
         return array(
-            'fr' => array(
-                'ca' => array('name' => 'cool'),
-                'fonctionne' => array('name' => 'hahaha'),
+            'fmip.git' => array(
+                'fr' => array(
+                    'ca' => array('name' => 'cool'),
+                    'fonctionne' => array('name' => 'hahaha'),
+                ),
+                'en' => array(
+                    'it' => array('name' => 'yeah'),
+                    'works' => array('name' => 'moze ****'),
+                ),
             ),
-            'en' => array(
-                'it' => array('name' => 'yeah'),
-                'works' => array('name' => 'moze ****'),
+            'papa.git' => array(
+                'fr' => array(
+                    'ou' => array('name' => 'ici paps'),
+                    'tai' => array('name' => 'là paps'),
+                ),
+                'en' => array(
+                    'where' => array('name' => 'Here paps'),
+                    'aryu' => array('name' => 'There paps'),
+                ),
             ),
+
+
         );
     }
 
@@ -80,10 +99,11 @@ class RouteProvider implements RouteProviderInterface{
      */
     public function getRouteByName($name)
     {
+        //This provider doesn't take symfony routes
         if(substr($name,0,1) === '_'){
             throw new RouteNotFoundException();
         }
-        exit('getRouteByName ' . $name);
+//        exit('getRouteByName ' . $name);
         // TODO: Implement getRouteByName() method.
     }
 
@@ -113,7 +133,7 @@ class RouteProvider implements RouteProviderInterface{
      */
     public function getRoutesByNames($names)
     {
-        exit('getRoutesByNames');
+//        exit('getRoutesByNames');
         // TODO: Implement getRoutesByNames() method.
     }
 

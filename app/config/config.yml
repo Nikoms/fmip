@@ -71,8 +71,8 @@ swiftmailer:
 cmf_routing:
     chain:
         routers_by_id:
-            cmf_routing.dynamic_router: 200
-            router.default: 100
+            cmf_routing.dynamic_router: 100
+            router.default: 200
     dynamic:
         enabled: true
         route_provider_service_id: nmc.dynamic_page.router
