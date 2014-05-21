@@ -13,8 +13,15 @@ services:
 
     nmc.dynamic_page.web_finder:
         class: Nmc\DynamicPageBundle\Routing\WebsiteFinder
-        arguments: [@request_stack, @doctrine.orm.entity_manager ]
+        arguments: [@request_stack, @nmc.website.repository ]
 
     nmc.dynamic_page.router:
         class: Nmc\DynamicPageBundle\Routing\RouteProvider
         arguments: [@nmc.dynamic_page.web_finder]
+
+    nmc.website.repository:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - NmcDynamicPageBundle:Website

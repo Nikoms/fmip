@@ -46,14 +46,23 @@ class RouteProvider implements RouteProviderInterface{
      */
     public function getRouteCollectionForRequest(Request $request)
     {
-        $pagesByHost = $this->getPagesByHost();
+        return $this->getRouteCollectionByHost($request->getHost());
+    }
+
+    /**
+     * @param $host
+     * @return RouteCollection
+     */
+    private function getRouteCollectionByHost($host)
+    {
+        $pagesOfHost = $this->getPagesByHost($host);
         $routeCollection = new RouteCollection();
 
-        if(!isset($pagesByHost[$request->getHost()])){
+        if(empty($pagesOfHost)){
             return $routeCollection;
         }
 
-        foreach($pagesByHost[$request->getHost()] as $locale => $pages){
+        foreach($pagesOfHost as $locale => $pages){
             foreach($pages as $pageName => $config){
                 $routeCollection->add($locale . '_' . $pageName,new Route('/' . $locale . '/' . $pageName, array('_controller' => 'Nmc\DynamicPageBundle\Controller\DefaultController::pageAction') + $config));
             }
@@ -61,12 +70,16 @@ class RouteProvider implements RouteProviderInterface{
         return $routeCollection;
     }
 
-    private function getPagesByHost()
+    /**
+     * @param $host
+     * @return mixed
+     */
+    private function getPagesByHost($host)
     {
-        return array(
+        $allPages = array(
             'fmip.git' => array(
                 'fr' => array(
-                    'ca' => array('name' => 'cool ' . $this->websiteFinder->getWebsite()->getTitle()),
+                    'ca' => array('name' => 'cool ' . ($this->websiteFinder->getWebsite() !== null ? $this->websiteFinder->getWebsite()->getTitle() : '')),
                     'fonctionne' => array('name' => 'hahaha'),
                 ),
                 'en' => array(
@@ -84,9 +97,9 @@ class RouteProvider implements RouteProviderInterface{
                     'aryu' => array('name' => 'There paps'),
                 ),
             ),
-
-
         );
+
+        return $allPages[$host];
     }
 
     /**
@@ -135,6 +148,7 @@ class RouteProvider implements RouteProviderInterface{
      */
     public function getRoutesByNames($names)
     {
+        return $this->getRouteCollectionByHost('no-website');
 //        exit('getRoutesByNames');
         // TODO: Implement getRoutesByNames() method.
     }

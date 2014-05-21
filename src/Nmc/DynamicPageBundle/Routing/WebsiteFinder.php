@@ -22,12 +22,10 @@ class WebsiteFinder
      */
     private $website;
 
-    public function __construct(RequestStack $requestStack, EntityManager $entityManager)
+    public function __construct(RequestStack $requestStack, WebsiteRepository $websiteRepository)
     {
-        if($requestStack->getCurrentRequest() === null){
-            return;
-        }
-        $this->website = $entityManager->getRepository('NmcDynamicPageBundle:Website')->findOneByHost($requestStack->getCurrentRequest()->getHost());
+        $host = ($requestStack->getCurrentRequest() !== null) ? $requestStack->getCurrentRequest()->getHost() : 'no-website';
+        $this->website = $websiteRepository->findOneByHost($host);
     }
 
     /**
@@ -37,8 +35,4 @@ class WebsiteFinder
     {
         return $this->website;
     }
-
-
-
-
 }

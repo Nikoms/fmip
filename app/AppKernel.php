@@ -19,6 +19,8 @@ class AppKernel extends Kernel
             new Nmc\DynamicPageBundle\NmcDynamicPageBundle(),
             new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+//            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
