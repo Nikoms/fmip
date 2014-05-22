@@ -2,6 +2,7 @@
 
 namespace Nmc\DynamicPageBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,6 +64,17 @@ class Page
      * @ORM\Column(name="sort", type="integer")
      */
     private $sort;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Block", mappedBy="page")
+     */
+    private $blocks;
+
+
+    public function __construct()
+    {
+        $this->blocks = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -197,6 +209,23 @@ class Page
     {
         return $this->template;
     }
+
+    /**
+     * @param mixed $blocks
+     */
+    public function setBlocks($blocks)
+    {
+        $this->blocks = $blocks;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBlocks()
+    {
+        return $this->blocks;
+    }
+
 
 
 }

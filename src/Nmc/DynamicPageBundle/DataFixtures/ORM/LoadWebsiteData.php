@@ -10,6 +10,7 @@ namespace Nmc\DynamicPageBundle\ORM\DataFixtures;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Nmc\DynamicPageBundle\Entity\Block;
 use Nmc\DynamicPageBundle\Entity\Page;
 use Nmc\DynamicPageBundle\Entity\Website;
 
@@ -39,6 +40,30 @@ class LoadWebsiteData implements FixtureInterface
         $page->setName('ACCUEIL');
         $page->setSort(0);
         $manager->persist($page);
+
+        $block = new Block();
+        $block->setName('Test Rss');
+        $block->setPage($page);
+        $block->setType('sonata.block.service.rss');
+        $block->setSettings(
+            array(
+                'title' => 'Sonata feed',
+                'url' => 'http://sonata-project.org/blog/archive.rss',
+            )
+        );
+        $manager->persist($block);
+
+        $block = new Block();
+        $block->setName('Test TextBlockService');
+        $block->setPage($page);
+        $block->setType('sonata.block.service.text');
+        $block->setSettings(
+            array(
+                'content' => 'Bonjour madame :)',
+            )
+        );
+        $manager->persist($block);
+
 
         $page = new Page();
         $page->setWebsite($website);

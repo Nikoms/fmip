@@ -19,7 +19,9 @@ class AppKernel extends Kernel
             new Nmc\DynamicPageBundle\NmcDynamicPageBundle(),
             new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-//            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
 
         );
 

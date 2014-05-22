@@ -2,5 +2,23 @@
 <head>
     <title>Hello :)</title>
 </head>
-<body>Hello {{ page.getName() }}!</body>
+<body>Hello {{ page.getName() }}!
+
+{% for block in page.getBlocks() %}
+
+    {{ sonata_block_render({'type': block.getType()}, block.getSettings()) }}
+
+{% endfor %}
+
+{{ sonata_block_render({'type': 'sonata.block.service.menu'}, {
+    'menu_name':'dynamicPageMenu'
+}) }}
+
+
+
+
+
+{{ sonata_block_include_stylesheets('screen', app.request.basePath) }}
+{{ sonata_block_include_javascripts('screen', app.request.basePath) }}
+</body>
 </html>

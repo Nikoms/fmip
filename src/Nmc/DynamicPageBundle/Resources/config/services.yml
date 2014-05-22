@@ -25,3 +25,16 @@ services:
         factory_method: getRepository
         arguments:
             - NmcDynamicPageBundle:Website
+
+    nmc.dynamic_page.menu_builder:
+        class: Nmc\DynamicPageBundle\Menu\Builder
+        arguments: [@knp_menu.factory, @nmc.dynamic_page.web_finder]
+
+    nmc.dynamic_page.menu.main:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory_service: nmc.dynamic_page.menu_builder
+        factory_method: createMainMenu
+        arguments: ["@request"]
+        scope: request # needed as we have the request as a dependency here
+        tags:
+            - { name: knp_menu.menu, alias: dynamicPageMenu } # The alias is what is used to retrieve the menu
