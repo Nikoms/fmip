@@ -51,6 +51,13 @@ class Page
     private $path;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="template", type="string", length=255, nullable=true)
+     */
+    private $template;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="sort", type="integer")
@@ -174,4 +181,22 @@ class Page
     {
         return $this->website;
     }
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+
 }

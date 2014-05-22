@@ -46,6 +46,7 @@ class LoadWebsiteData implements FixtureInterface
         $page->setPath('/fr/ca');
         $page->setName('Ke');
         $page->setSort(1);
+        $page->setTemplate('NmcDynamicPageBundle:Default:index2.html.twig');
         $manager->persist($page);
 
         $page = new Page();
