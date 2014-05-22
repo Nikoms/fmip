@@ -31,6 +31,15 @@ class LoadWebsiteData implements FixtureInterface
 
         $manager->persist($website);
 
+
+        $page = new Page();
+        $page->setWebsite($website);
+        $page->setLocale('');
+        $page->setPath('/');
+        $page->setName('ACCUEIL');
+        $page->setSort(0);
+        $manager->persist($page);
+
         $page = new Page();
         $page->setWebsite($website);
         $page->setLocale('fr');
@@ -113,5 +122,13 @@ class LoadWebsiteData implements FixtureInterface
         $website->setHost('no-website');
         $website->setTitle('No website :(');
         $manager->persist($website);
+
+        $page = new Page();
+        $page->setWebsite($website);
+        $page->setLocale('');
+        $page->setPath('/');
+        $page->setName("Accueil général d'un site inconnu!");
+        $page->setSort(1);
+        $manager->persist($page);
     }
 } 

@@ -26,6 +26,9 @@ class WebsiteFinder
     {
         $host = ($requestStack->getCurrentRequest() !== null) ? $requestStack->getCurrentRequest()->getHost() : 'no-website';
         $this->website = $websiteRepository->findOneByHost($host);
+        if($this->website === null){
+            $this->website = $websiteRepository->findOneByHost('no-website');
+        }
     }
 
     /**

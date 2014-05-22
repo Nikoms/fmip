@@ -55,51 +55,14 @@ class RouteProvider implements RouteProviderInterface{
      */
     private function getRouteCollectionByHost($host)
     {
-        $pagesOfHost = $this->getPagesByHost($host);
         $routeCollection = new RouteCollection();
 
-        if(empty($pagesOfHost)){
-            return $routeCollection;
+        foreach($this->websiteFinder->getWebsite()->getPages() as $page){
+            $config = array('page' => $page);
+            $routeCollection->add($page->getLocale() . '_' . $page->getId(), new Route($page->getPath(), array('_controller' => 'Nmc\DynamicPageBundle\Controller\DefaultController::pageAction') + $config));
         }
 
-        foreach($pagesOfHost as $locale => $pages){
-            foreach($pages as $pageName => $config){
-                $routeCollection->add($locale . '_' . $pageName,new Route('/' . $locale . '/' . $pageName, array('_controller' => 'Nmc\DynamicPageBundle\Controller\DefaultController::pageAction') + $config));
-            }
-        }
         return $routeCollection;
-    }
-
-    /**
-     * @param $host
-     * @return mixed
-     */
-    private function getPagesByHost($host)
-    {
-        $allPages = array(
-            'fmip.git' => array(
-                'fr' => array(
-                    'ca' => array('name' => 'cool ' . ($this->websiteFinder->getWebsite() !== null ? $this->websiteFinder->getWebsite()->getTitle() : '')),
-                    'fonctionne' => array('name' => 'hahaha'),
-                ),
-                'en' => array(
-                    'it' => array('name' => 'yeah'),
-                    'works' => array('name' => 'moze ****'),
-                ),
-            ),
-            'papa.git' => array(
-                'fr' => array(
-                    'ou' => array('name' => 'ici paps'),
-                    'tai' => array('name' => 'là paps'),
-                ),
-                'en' => array(
-                    'where' => array('name' => 'Here paps'),
-                    'aryu' => array('name' => 'There paps'),
-                ),
-            ),
-        );
-
-        return $allPages[$host];
     }
 
     /**

@@ -101,4 +101,23 @@ class Website
     {
         return $this->host;
     }
+
+    /**
+     * @param mixed $pages
+     */
+    public function setPages($pages)
+    {
+        $this->pages = $pages;
+    }
+
+    /**
+     * @return Page[]
+     */
+    public function getPages()
+    {
+        return $this->pages;
+    }
+
+
+
 }
