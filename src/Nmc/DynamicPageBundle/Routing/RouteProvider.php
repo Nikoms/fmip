@@ -46,14 +46,13 @@ class RouteProvider implements RouteProviderInterface{
      */
     public function getRouteCollectionForRequest(Request $request)
     {
-        return $this->getRouteCollectionByHost($request->getHost());
+        return $this->getRouteCollectionByHost();
     }
 
     /**
-     * @param $host
      * @return RouteCollection
      */
-    private function getRouteCollectionByHost($host)
+    private function getRouteCollectionByHost()
     {
         $routeCollection = new RouteCollection();
 
@@ -111,8 +110,7 @@ class RouteProvider implements RouteProviderInterface{
      */
     public function getRoutesByNames($names)
     {
-        return $this->getRouteCollectionByHost('no-website');
-//        exit('getRoutesByNames');
+        return $this->getRouteCollectionByHost();
         // TODO: Implement getRoutesByNames() method.
     }
 
