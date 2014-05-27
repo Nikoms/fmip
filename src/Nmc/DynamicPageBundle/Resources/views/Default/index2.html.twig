@@ -2,5 +2,13 @@
 <head>
     <title>Vous etes sur le deuxieme template</title>
 </head>
-<body>Félicitations, ca fonctionne pas trop mal: {{ page.getName() }}!</body>
+<body>Félicitations, ca fonctionne pas trop mal: {{ page.getName() }}!
+
+
+{{ sonata_block_render({'type': 'sonata.block.service.menu'}, {
+'menu_name':'dynamicPageMenu'
+}) }}
+
+
+</body>
 </html>
