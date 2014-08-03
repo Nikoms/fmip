@@ -10,16 +10,16 @@ namespace Nmc\DynamicPageBundle\Menu;
 
 
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 use Nmc\DynamicPageBundle\Routing\WebsiteFinder;
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Request;
 
-class Builder extends ContainerAware
+class Builder
 {
     /**
      * @var \Knp\Menu\FactoryInterface
      */
-    private $factory;
+    private $menuFactory;
 
     /**
      * @var \Nmc\DynamicPageBundle\Routing\WebsiteFinder
@@ -27,17 +27,39 @@ class Builder extends ContainerAware
     private $websiteFinder;
 
 
-    public function __construct(FactoryInterface $factory, WebsiteFinder $websiteFinder)
+    /**
+     * @param FactoryInterface $menuFactory
+     * @param WebsiteFinder $websiteFinder
+     */
+    public function __construct(FactoryInterface $menuFactory, WebsiteFinder $websiteFinder)
     {
         $this->websiteFinder = $websiteFinder;
-        $this->factory = $factory;
+        $this->menuFactory = $menuFactory;
     }
+
+    /**
+     * @param Request $request
+     * @return \Knp\Menu\ItemInterface
+     */
     public function createMainMenu(Request $request)
     {
-        $menu = $this->factory->createItem('root');
-        foreach($this->websiteFinder->getWebsite()->getPages() as $page){
+        return $this->fillMenu($this->menuFactory->createItem('root'), $request->getLocale());
+    }
+
+    /**
+     * @param ItemInterface $menu
+     * @param string $locale
+     * @return ItemInterface
+     */
+    private function fillMenu(ItemInterface $menu, $locale)
+    {
+        foreach ($this->websiteFinder->getWebsite()->getPages() as $page) {
+            if ($page->getLocale() !== $locale) {
+                continue;
+            }
             $menu->addChild($page->getName());
         }
+
         return $menu;
     }
-} 
+}
