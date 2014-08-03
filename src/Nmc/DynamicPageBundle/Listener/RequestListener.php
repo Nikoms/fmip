@@ -18,9 +18,11 @@ class RequestListener
         if (HttpKernelInterface::MASTER_REQUEST != $event->getRequestType()) {
             return;
         }
-//        $event->getRequest()->attributes->set('_controller', 'Nmc\DynamicPageBundle\Controller\DefaultController::pageAction');
-//        echo $event->getRequest()->getHost();
-//        exit();
+        $page = $event->getRequest()->attributes->get('page');
+        //Set local from the page language
+        if($page !== null){
+            $event->getRequest()->setLocale($page->getLocale());
+        }
     }
 
 } 
