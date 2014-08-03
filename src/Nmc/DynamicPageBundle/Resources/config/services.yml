@@ -6,14 +6,14 @@ services:
 #        class: %nmc_dynamic_page.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 
+    nmc.dynamic_page.web_finder:
+        class: Nmc\DynamicPageBundle\Routing\WebsiteFinder
+        arguments: [@request_stack, @nmc.website.repository]
+
     kernel.listener.request_listener:
         class: Nmc\DynamicPageBundle\Listener\RequestListener
         tags:
             - { name: kernel.event_listener, event: kernel.request }
-
-    nmc.dynamic_page.web_finder:
-        class: Nmc\DynamicPageBundle\Routing\WebsiteFinder
-        arguments: [@request_stack, @nmc.website.repository ]
 
     nmc.dynamic_page.router:
         class: Nmc\DynamicPageBundle\Routing\RouteProvider

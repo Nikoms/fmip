@@ -12,6 +12,9 @@ namespace Nmc\DynamicPageBundle\Routing;
 use Symfony\Cmf\Component\Routing\RouteProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -46,7 +49,17 @@ class RouteProvider implements RouteProviderInterface{
      */
     public function getRouteCollectionForRequest(Request $request)
     {
-        return $this->getRouteCollection();
+        $routes = $this->getRouteCollection();
+        $context = new RequestContext();
+        $context->fromRequest($request);
+        $matcher = new UrlMatcher($routes, $context);
+        $attributes = $matcher->matchRequest($request);
+
+
+        $routeCollection = new RouteCollection();
+        $routeCollection->add($attributes['_route'], $routes->get($attributes['_route']));
+
+        return $routeCollection;
     }
 
     /**
