@@ -8,10 +8,9 @@ class DefaultControllerTest extends WebTestCase
 {
     public function testIndex()
     {
-        $client = static::createClient();
+        $client = static::createClient(array(),array('HTTP_HOST' => 'fmip.git'));
 
-        $crawler = $client->request('GET', '/hello/Fabien');
-
-        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        $crawler = $client->request('GET', '/fr/ca');
+        $this->assertTrue($crawler->filter('html:contains("Félicitations, ca fonctionne pas trop mal: Ke!")')->count() > 0);
     }
 }
