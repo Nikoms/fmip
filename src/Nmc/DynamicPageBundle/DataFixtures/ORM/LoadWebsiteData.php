@@ -6,7 +6,7 @@
  * Time: 18:55
  */
 
-namespace Nmc\DynamicPageBundle\ORM\DataFixtures;
+namespace Nmc\DynamicPageBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
