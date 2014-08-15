@@ -5,6 +5,7 @@ framework:
     test: ~
     session:
         storage_id: session.storage.mock_file
+ #       storage_id: session.storage.filesystem - As they said here (https://github.com/liip/LiipFunctionalTestBundle) but it worked with mock_file
     profiler:
         collect: false
 
@@ -18,10 +19,10 @@ swiftmailer:
 
 doctrine:
     dbal:
-        driver:       sqlite
-        host:         localhost
-        dbname:    db_test
-        user:         db_user
-        password: db_pwd
-        charset:     UTF8
-        memory:    true
+        default_connection: default
+        connections:
+            default:
+                driver:   pdo_sqlite
+                path:     %kernel.cache_dir%/test.db
+
+liip_functional_test: ~
