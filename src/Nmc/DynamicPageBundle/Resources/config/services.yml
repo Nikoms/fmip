@@ -1,5 +1,5 @@
 parameters:
-#    nmc_dynamic_page.example.class: Nmc\DynamicPageBundle\Example
+    nmc_dynamic_page.default.action: Nmc\DynamicPageBundle\Controller\DefaultController::pageAction
 
 services:
 
@@ -27,7 +27,7 @@ services:
 
     nmc.dynamic_page.router:
         class: Nmc\DynamicPageBundle\Routing\RouteProvider
-        arguments: [@nmc.dynamic_page.page_finder]
+        arguments: [@nmc.dynamic_page.page_finder, '%nmc_dynamic_page.default.action%']
 
 
     nmc.dynamic_page.menu_builder:

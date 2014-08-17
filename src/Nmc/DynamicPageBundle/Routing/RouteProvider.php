@@ -21,16 +21,24 @@ use Symfony\Component\Routing\RouteCollection;
 class RouteProvider implements RouteProviderInterface{
 
     /**
+     * @var string
+     */
+    private $controllerAction;
+
+    /**
      * @var \Nmc\DynamicPageBundle\Service\PageFinderInterface
      */
     private $pageFinder;
 
+
     /**
      * @param PageFinderInterface $pageFinder
+     * @param string $controllerAction
      */
-    public function __construct(PageFinderInterface $pageFinder)
+    public function __construct(PageFinderInterface $pageFinder, $controllerAction)
     {
         $this->pageFinder = $pageFinder;
+        $this->controllerAction = $controllerAction;
     }
     /**
      * Finds routes that may potentially match the request.
@@ -78,7 +86,7 @@ class RouteProvider implements RouteProviderInterface{
 
         foreach($this->pageFinder->getPages() as $page){
             $config = array('page' => $page);
-            $routeCollection->add($page->getLocale() . '_' . $page->getId(), new Route($page->getPath(), array('_controller' => 'Nmc\DynamicPageBundle\Controller\DefaultController::pageAction') + $config));
+            $routeCollection->add($page->getLocale() . '_' . $page->getId(), new Route($page->getPath(), array('_controller' => $this->controllerAction) + $config));
         }
 
         return $routeCollection;
