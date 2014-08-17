@@ -9,7 +9,7 @@
 namespace Nmc\DynamicPageBundle\Routing;
 
 
-use Nmc\DynamicPageBundle\Service\WebsiteFinder;
+use Nmc\DynamicPageBundle\Service\PageFinderInterface;
 use Symfony\Cmf\Component\Routing\RouteProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -20,10 +20,17 @@ use Symfony\Component\Routing\RouteCollection;
 
 class RouteProvider implements RouteProviderInterface{
 
-    private $websiteFinder;
-    public function __construct(WebsiteFinder $websiteFinder)
+    /**
+     * @var \Nmc\DynamicPageBundle\Service\PageFinderInterface
+     */
+    private $pageFinder;
+
+    /**
+     * @param PageFinderInterface $pageFinder
+     */
+    public function __construct(PageFinderInterface $pageFinder)
     {
-        $this->websiteFinder = $websiteFinder;
+        $this->pageFinder = $pageFinder;
     }
     /**
      * Finds routes that may potentially match the request.
@@ -69,7 +76,7 @@ class RouteProvider implements RouteProviderInterface{
     {
         $routeCollection = new RouteCollection();
 
-        foreach($this->websiteFinder->getWebsite()->getPages() as $page){
+        foreach($this->pageFinder->getPages() as $page){
             $config = array('page' => $page);
             $routeCollection->add($page->getLocale() . '_' . $page->getId(), new Route($page->getPath(), array('_controller' => 'Nmc\DynamicPageBundle\Controller\DefaultController::pageAction') + $config));
         }
