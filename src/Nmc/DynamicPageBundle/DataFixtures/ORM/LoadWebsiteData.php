@@ -12,7 +12,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Nmc\DynamicPageBundle\Entity\Block;
 use Nmc\DynamicPageBundle\Entity\Page;
-use Nmc\DynamicPageBundle\Entity\Website;
+use Nmc\DynamicWebsiteBundle\Entity\Website;
 
 class LoadWebsiteData implements FixtureInterface
 {
@@ -21,7 +21,6 @@ class LoadWebsiteData implements FixtureInterface
         $this->addSite1($manager);
         $this->addSite2($manager);
         $this->addNoSite($manager);
-        $manager->flush();
     }
 
     private function addSite1(ObjectManager $manager)
@@ -31,10 +30,12 @@ class LoadWebsiteData implements FixtureInterface
         $website->setTitle('Le site de fmip');
 
         $manager->persist($website);
+        $manager->flush();
+
 
 
         $page = new Page();
-        $page->setWebsite($website);
+        $page->setWebsiteId($website->getId());
         $page->setLocale('');
         $page->setPath('/');
         $page->setName('ACCUEIL');
@@ -66,7 +67,7 @@ class LoadWebsiteData implements FixtureInterface
 
 
         $page = new Page();
-        $page->setWebsite($website);
+        $page->setWebsiteId($website->getId());
         $page->setLocale('fr');
         $page->setPath('/fr/ca');
         $page->setName('Ke');
@@ -75,7 +76,7 @@ class LoadWebsiteData implements FixtureInterface
         $manager->persist($page);
 
         $page = new Page();
-        $page->setWebsite($website);
+        $page->setWebsiteId($website->getId());
         $page->setLocale('fr');
         $page->setPath('/fr/fonctionne');
         $page->setName("Ftem!");
@@ -84,7 +85,7 @@ class LoadWebsiteData implements FixtureInterface
 
 
         $page = new Page();
-        $page->setWebsite($website);
+        $page->setWebsiteId($website->getId());
         $page->setLocale('en');
         $page->setPath('/en/it');
         $page->setName('Yeah');
@@ -92,12 +93,14 @@ class LoadWebsiteData implements FixtureInterface
         $manager->persist($page);
 
         $page = new Page();
-        $page->setWebsite($website);
+        $page->setWebsiteId($website->getId());
         $page->setLocale('en');
         $page->setPath('/en/works');
         $page->setName("Baby!");
         $page->setSort(2);
         $manager->persist($page);
+
+        $manager->flush();
     }
 
     private function addSite2(ObjectManager $manager)
@@ -107,9 +110,10 @@ class LoadWebsiteData implements FixtureInterface
         $website->setTitle('Le site de paps');
 
         $manager->persist($website);
+        $manager->flush();
 
         $page = new Page();
-        $page->setWebsite($website);
+        $page->setWebsiteId($website->getId());
         $page->setLocale('fr');
         $page->setPath('/fr/ou');
         $page->setName('La');
@@ -117,7 +121,7 @@ class LoadWebsiteData implements FixtureInterface
         $manager->persist($page);
 
         $page = new Page();
-        $page->setWebsite($website);
+        $page->setWebsiteId($website->getId());
         $page->setLocale('fr');
         $page->setPath('/fr/tai');
         $page->setName("Bas!");
@@ -126,7 +130,7 @@ class LoadWebsiteData implements FixtureInterface
 
 
         $page = new Page();
-        $page->setWebsite($website);
+        $page->setWebsiteId($website->getId());
         $page->setLocale('en');
         $page->setPath('/en/wer');
         $page->setName('I am');
@@ -134,12 +138,14 @@ class LoadWebsiteData implements FixtureInterface
         $manager->persist($page);
 
         $page = new Page();
-        $page->setWebsite($website);
+        $page->setWebsiteId($website->getId());
         $page->setLocale('en');
         $page->setPath('/en/aryou');
         $page->setName("Herefk!");
         $page->setSort(2);
         $manager->persist($page);
+
+        $manager->flush();
     }
 
     private function addNoSite(ObjectManager $manager)
@@ -148,13 +154,16 @@ class LoadWebsiteData implements FixtureInterface
         $website->setHost('no-website');
         $website->setTitle('No website :(');
         $manager->persist($website);
+        $manager->flush();
 
         $page = new Page();
-        $page->setWebsite($website);
+        $page->setWebsiteId($website->getId());
         $page->setLocale('');
         $page->setPath('/');
         $page->setName("Accueil général d'un site inconnu!");
         $page->setSort(1);
         $manager->persist($page);
+
+        $manager->flush();
     }
 } 

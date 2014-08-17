@@ -10,17 +10,23 @@ namespace Nmc\DynamicPageBundle\Service;
 
 
 use Nmc\DynamicPageBundle\Entity\Page;
-use Nmc\DynamicPageBundle\Entity\Website;
+use Nmc\DynamicPageBundle\Entity\PageProviderInterface;
 
 class PageFinder implements PageFinderInterface{
-    private $website;
 
     /**
-     * @param Website $website
+     * @var int
      */
-    public function __construct(Website $website)
+    private $websiteId;
+
+    /**
+     * @param PageProviderInterface $pageProvider
+     * @param int $websiteId
+     */
+    public function __construct(PageProviderInterface $pageProvider, $websiteId)
     {
-        $this->website = $website;
+        $this->pageProvider = $pageProvider;
+        $this->websiteId = (int) $websiteId;
     }
 
     /**
@@ -28,7 +34,7 @@ class PageFinder implements PageFinderInterface{
      */
     public function getPages()
     {
-        return $this->website->getPages();
+        return $this->pageProvider->getPagesByWebsiteId($this->websiteId);
     }
 
 

@@ -11,7 +11,7 @@ namespace Nmc\DynamicPageBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Nmc\DynamicPageBundle\Service\WebsiteFinder;
+use Nmc\DynamicPageBundle\Service\PageFinderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class Builder
@@ -21,19 +21,20 @@ class Builder
      */
     private $menuFactory;
 
+
     /**
-     * @var \Nmc\DynamicPageBundle\Service\WebsiteFinder
+     * @var \Nmc\DynamicPageBundle\Service\PageFinderInterface
      */
-    private $websiteFinder;
+    private $pageFinder;
 
 
     /**
      * @param FactoryInterface $menuFactory
-     * @param WebsiteFinder $websiteFinder
+     * @param PageFinderInterface $pageFinder
      */
-    public function __construct(FactoryInterface $menuFactory, WebsiteFinder $websiteFinder)
+    public function __construct(FactoryInterface $menuFactory, PageFinderInterface $pageFinder)
     {
-        $this->websiteFinder = $websiteFinder;
+        $this->pageFinder = $pageFinder;
         $this->menuFactory = $menuFactory;
     }
 
@@ -53,7 +54,7 @@ class Builder
      */
     private function fillMenu(ItemInterface $menu, $locale)
     {
-        foreach ($this->websiteFinder->getWebsite()->getPages() as $page) {
+        foreach ($this->pageFinder->getPages() as $page) {
             if ($page->getLocale() !== $locale) {
                 continue;
             }

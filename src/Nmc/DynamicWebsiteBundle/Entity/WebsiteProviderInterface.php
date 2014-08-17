@@ -1,6 +1,6 @@
 <?php
 
-namespace Nmc\DynamicPageBundle\Entity;
+namespace Nmc\DynamicWebsiteBundle\Entity;
 
 interface WebsiteProviderInterface{
     /**

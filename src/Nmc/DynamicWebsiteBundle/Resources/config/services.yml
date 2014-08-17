@@ -1,0 +1,12 @@
+services:
+
+    nmc.dynamic_website.repository:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - NmcDynamicWebsiteBundle:Website
+
+    nmc.dynamic_website.web_finder:
+        class: Nmc\DynamicWebsiteBundle\Service\WebsiteFinder
+        arguments: [@request_stack, @nmc.dynamic_website.repository]

@@ -6,12 +6,12 @@
  * Time: 18:17
  */
 
-namespace Nmc\DynamicPageBundle\Service;
+namespace Nmc\DynamicWebsiteBundle\Service;
 
 
-use Nmc\DynamicPageBundle\Entity\Website;
+use Nmc\DynamicWebsiteBundle\Entity\Website;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Nmc\DynamicPageBundle\Entity\WebsiteProviderInterface;
+use Nmc\DynamicWebsiteBundle\Entity\WebsiteProviderInterface;
 
 class WebsiteFinder implements WebsiteFinderInterface
 {
@@ -54,7 +54,7 @@ class WebsiteFinder implements WebsiteFinderInterface
     }
 
     /**
-     * @return \Nmc\DynamicPageBundle\Entity\Website
+     * @return Website
      */
     public function getWebsite()
     {

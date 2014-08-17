@@ -8,22 +8,16 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request }
 
-    nmc.dynamic_website.repository:
+    nmc.dynamic_page.repository:
         class: Doctrine\ORM\EntityRepository
         factory_service: doctrine.orm.entity_manager
         factory_method: getRepository
         arguments:
-            - NmcDynamicPageBundle:Website
-
-    nmc.dynamic_website.web_finder:
-        class: Nmc\DynamicPageBundle\Service\WebsiteFinder
-        arguments: [@request_stack, @nmc.dynamic_website.repository]
-
-
+            - NmcDynamicPageBundle:Page
 
     nmc.dynamic_page.page_finder:
         class: Nmc\DynamicPageBundle\Service\PageFinder
-        arguments: ["@=service('nmc.dynamic_website.web_finder').getWebsite()"]
+        arguments: [@nmc.dynamic_page.repository, "@=service('nmc.dynamic_website.web_finder').getWebsite().getId()"]
 
     nmc.dynamic_page.router:
         class: Nmc\DynamicPageBundle\Routing\RouteProvider
@@ -32,7 +26,7 @@ services:
 
     nmc.dynamic_page.menu_builder:
         class: Nmc\DynamicPageBundle\Menu\Builder
-        arguments: [@knp_menu.factory, @nmc.dynamic_website.web_finder]
+        arguments: [@knp_menu.factory, @nmc.dynamic_page.page_finder]
 
     nmc.dynamic_page.menu.main:
         class: Knp\Menu\MenuItem # the service definition requires setting the class

@@ -1,15 +1,14 @@
 <?php
 
-namespace Nmc\DynamicPageBundle\Entity;
+namespace Nmc\DynamicWebsiteBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Website
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Nmc\DynamicPageBundle\Entity\WebsiteRepository")
+ * @ORM\Entity(repositoryClass="Nmc\DynamicWebsiteBundle\Entity\WebsiteRepository")
  */
 class Website
 {
@@ -36,14 +35,9 @@ class Website
      */
     private $host;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Page", mappedBy="website")
-     */
-    protected $pages;
 
     public function __construct()
     {
-        $this->pages = new ArrayCollection();
     }
 
     /**
@@ -101,23 +95,4 @@ class Website
     {
         return $this->host;
     }
-
-    /**
-     * @param mixed $pages
-     */
-    public function setPages($pages)
-    {
-        $this->pages = $pages;
-    }
-
-    /**
-     * @return Page[]
-     */
-    public function getPages()
-    {
-        return $this->pages;
-    }
-
-
-
 }

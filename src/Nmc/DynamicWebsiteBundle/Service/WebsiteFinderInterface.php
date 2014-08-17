@@ -6,10 +6,10 @@
  * Time: 17:58
  */
 
-namespace Nmc\DynamicPageBundle\Service;
+namespace Nmc\DynamicWebsiteBundle\Service;
 
 
-use Nmc\DynamicPageBundle\Entity\Website;
+use Nmc\DynamicWebsiteBundle\Entity\Website;
 
 interface WebsiteFinderInterface {
 

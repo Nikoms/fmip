@@ -23,12 +23,11 @@ class Page
     private $id;
 
     /**
-     * @var Website
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Website", inversedBy="pages")
-     * @ORM\JoinColumn(name="website_id", referencedColumnName="id")
+     * @ORM\Column(name="website_id", type="integer")
      */
-    private $website;
+    private $websiteId;
 
     /**
      * @var string
@@ -179,19 +178,19 @@ class Page
     }
 
     /**
-     * @param \Nmc\DynamicPageBundle\Entity\Website $website
+     * @param int $websiteId
      */
-    public function setWebsite($website)
+    public function setWebsiteId($websiteId)
     {
-        $this->website = $website;
+        $this->websiteId = $websiteId;
     }
 
     /**
-     * @return \Nmc\DynamicPageBundle\Entity\Website
+     * @return int
      */
-    public function getWebsite()
+    public function getWebsiteId()
     {
-        return $this->website;
+        return $this->websiteId;
     }
 
     /**
