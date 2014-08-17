@@ -13,7 +13,7 @@ use Nmc\DynamicPageBundle\Entity\Website;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Nmc\DynamicPageBundle\Entity\WebsiteProviderInterface;
 
-class WebsiteFinder
+class WebsiteFinder implements WebsiteFinderInterface
 {
     /**
      * @var Website
