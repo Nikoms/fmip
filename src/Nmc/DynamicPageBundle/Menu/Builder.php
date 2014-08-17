@@ -11,7 +11,7 @@ namespace Nmc\DynamicPageBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Nmc\DynamicPageBundle\Routing\WebsiteFinder;
+use Nmc\DynamicPageBundle\Service\WebsiteFinder;
 use Symfony\Component\HttpFoundation\Request;
 
 class Builder
@@ -22,7 +22,7 @@ class Builder
     private $menuFactory;
 
     /**
-     * @var \Nmc\DynamicPageBundle\Routing\WebsiteFinder
+     * @var \Nmc\DynamicPageBundle\Service\WebsiteFinder
      */
     private $websiteFinder;
 

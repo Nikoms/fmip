@@ -6,7 +6,7 @@
  * Time: 18:17
  */
 
-namespace Nmc\DynamicPageBundle\Routing;
+namespace Nmc\DynamicPageBundle\Service;
 
 
 use Nmc\DynamicPageBundle\Entity\Website;
