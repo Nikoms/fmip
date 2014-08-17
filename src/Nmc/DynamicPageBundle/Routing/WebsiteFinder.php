@@ -24,10 +24,15 @@ class WebsiteFinder
 
     public function __construct(RequestStack $requestStack, WebsiteRepository $websiteRepository)
     {
-        $host = ($requestStack->getCurrentRequest() !== null) ? $requestStack->getCurrentRequest()->getHost() : 'no-website';
-        $this->website = $websiteRepository->findOneByHost($host);
-        if($this->website === null){
-            $this->website = $websiteRepository->findOneByHost('no-website');
+        try{
+            $host = ($requestStack->getCurrentRequest() !== null) ? $requestStack->getCurrentRequest()->getHost() : 'no-website';
+            $this->website = $websiteRepository->findOneByHost($host);
+            if($this->website === null){
+                $this->website = $websiteRepository->findOneByHost('no-website');
+            }
+        }catch (\Exception $ex){
+            //No database?
+            $this->website = new Website();
         }
     }
 
