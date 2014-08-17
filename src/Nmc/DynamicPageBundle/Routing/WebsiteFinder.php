@@ -9,11 +9,9 @@
 namespace Nmc\DynamicPageBundle\Routing;
 
 
-use Doctrine\ORM\EntityManager;
 use Nmc\DynamicPageBundle\Entity\Website;
-use Nmc\DynamicPageBundle\Entity\WebsiteRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Nmc\DynamicPageBundle\Entity\WebsiteProviderInterface;
 
 class WebsiteFinder
 {
@@ -22,17 +20,36 @@ class WebsiteFinder
      */
     private $website;
 
-    public function __construct(RequestStack $requestStack, WebsiteRepository $websiteRepository)
+    /**
+     * @var string
+     */
+    private $currentHost;
+
+    /**
+     * @var WebsiteProviderInterface
+     */
+    private $websiteProvider;
+
+    /**
+     * @param RequestStack $requestStack
+     * @param WebsiteProviderInterface $websiteProvider
+     */
+    public function __construct(RequestStack $requestStack, WebsiteProviderInterface $websiteProvider)
+    {
+        $this->currentHost = ($requestStack->getCurrentRequest() !== null) ? $requestStack->getCurrentRequest()->getHost() : '';
+        $this->websiteProvider = $websiteProvider;
+    }
+
+    private function initWebsite()
     {
         try{
-            $host = ($requestStack->getCurrentRequest() !== null) ? $requestStack->getCurrentRequest()->getHost() : 'no-website';
-            $this->website = $websiteRepository->findOneByHost($host);
+            $this->website = $this->websiteProvider->findOneByHost($this->currentHost);
             if($this->website === null){
-                $this->website = $websiteRepository->findOneByHost('no-website');
+                $this->websiteProvider->findDefaultWebsite();
             }
         }catch (\Exception $ex){
             //No database?
-            $this->website = new Website();
+            $this->website = $this->websiteProvider->findDefaultWebsite();
         }
     }
 
@@ -41,6 +58,9 @@ class WebsiteFinder
      */
     public function getWebsite()
     {
+        if($this->website === null){
+            $this->initWebsite();
+        }
         return $this->website;
     }
 }
