@@ -46,7 +46,7 @@ class WebsiteFinder implements WebsiteFinderInterface
         try{
             $this->website = $this->websiteProvider->findOneByHost($this->currentHost);
             if($this->website === null){
-                throw new WebsiteNotFoundException();
+                $this->initEmptyWebsite();
             }
         }catch (\Exception $ex){
             //Could be PDOException too
