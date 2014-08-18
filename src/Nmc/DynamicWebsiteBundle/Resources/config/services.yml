@@ -9,4 +9,5 @@ services:
 
     nmc.dynamic_website.web_finder:
         class: Nmc\DynamicWebsiteBundle\Service\WebsiteFinder
-        arguments: [@request_stack, @nmc.dynamic_website.repository]
+        arguments: [@nmc.dynamic_website.repository, "@=service('request_stack').getCurrentRequest()"]
+

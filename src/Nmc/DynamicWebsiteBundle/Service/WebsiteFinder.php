@@ -10,7 +10,7 @@ namespace Nmc\DynamicWebsiteBundle\Service;
 
 
 use Nmc\DynamicWebsiteBundle\Entity\Website;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
 use Nmc\DynamicWebsiteBundle\Entity\WebsiteProviderInterface;
 
 class WebsiteFinder implements WebsiteFinderInterface
@@ -31,12 +31,12 @@ class WebsiteFinder implements WebsiteFinderInterface
     private $websiteProvider;
 
     /**
-     * @param RequestStack $requestStack
      * @param WebsiteProviderInterface $websiteProvider
+     * @param Request $request
      */
-    public function __construct(RequestStack $requestStack, WebsiteProviderInterface $websiteProvider)
+    public function __construct(WebsiteProviderInterface $websiteProvider, Request $request = null)
     {
-        $this->currentHost = ($requestStack->getCurrentRequest() !== null) ? $requestStack->getCurrentRequest()->getHost() : '';
+        $this->currentHost = $request !== null ? $request->getHost() : '';
         $this->websiteProvider = $websiteProvider;
     }
 
