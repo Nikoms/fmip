@@ -20,12 +20,4 @@ class WebsiteRepository extends EntityRepository implements WebsiteProviderInter
     {
         return $this->findOneBy(array('host' => $hostName));
     }
-
-    /**
-     * @return Website
-     */
-    public function findDefaultWebsite()
-    {
-        return $this->findOneByHost('no-website');
-    }
 }

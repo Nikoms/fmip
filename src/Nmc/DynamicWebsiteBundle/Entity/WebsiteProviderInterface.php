@@ -8,9 +8,4 @@ interface WebsiteProviderInterface{
      * @return Website
      */
     public function findOneByHost($hostName);
-
-    /**
-     * @return Website
-     */
-    public function findDefaultWebsite();
 }

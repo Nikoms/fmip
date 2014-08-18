@@ -10,6 +10,7 @@ namespace Nmc\DynamicWebsiteBundle\Service;
 
 
 use Nmc\DynamicWebsiteBundle\Entity\Website;
+use Nmc\DynamicWebsiteBundle\Exception\WebsiteNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Nmc\DynamicWebsiteBundle\Entity\WebsiteProviderInterface;
 
@@ -45,12 +46,18 @@ class WebsiteFinder implements WebsiteFinderInterface
         try{
             $this->website = $this->websiteProvider->findOneByHost($this->currentHost);
             if($this->website === null){
-                $this->websiteProvider->findDefaultWebsite();
+                throw new WebsiteNotFoundException();
             }
         }catch (\Exception $ex){
-            //No database?
-            $this->website = $this->websiteProvider->findDefaultWebsite();
+            //Could be PDOException too
+            $this->initEmptyWebsite();
         }
+    }
+
+    private function initEmptyWebsite()
+    {
+        $this->website = new Website();
+        $this->website->setHost($this->currentHost);
     }
 
     /**
@@ -61,6 +68,7 @@ class WebsiteFinder implements WebsiteFinderInterface
         if($this->website === null){
             $this->initWebsite();
         }
+
         return $this->website;
     }
 }
