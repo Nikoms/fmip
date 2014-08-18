@@ -8,29 +8,30 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request }
 
-    nmc.dynamic_page.repository:
+    nmc_dynamic_page.repository:
         class: Doctrine\ORM\EntityRepository
         factory_service: doctrine.orm.entity_manager
         factory_method: getRepository
         arguments:
             - NmcDynamicPageBundle:Page
 
-#    nmc.dynamic_page.page_finder:
-#        class: Nmc\DynamicPageBundle\Service\PageFinder
-#        arguments: [@nmc.dynamic_page.repository, "@=service('nmc.dynamic_website.web_finder').getWebsite().getId()"]
+    nmc_dynamic_page.page_of_web_provider:
+        class: Nmc\DynamicPageBundle\Entity\PageOfWebsiteProvider
+        arguments: [@nmc_dynamic_page.repository, "@=service('nmc.dynamic_website.web_finder').getWebsite().getId()"]
 
-    nmc.dynamic_page.router:
+
+    nmc_dynamic_page.router:
         class: Nmc\DynamicPageBundle\Routing\RouteProvider
-        arguments: [@nmc.dynamic_page.repository, '%nmc_dynamic_page.default.action%']
+        arguments: [@nmc_dynamic_page.provider_service_id, '%nmc_dynamic_page.default.action%']
 
 
-    nmc.dynamic_page.menu_builder:
+    nmc_dynamic_page.menu_builder:
         class: Nmc\DynamicPageBundle\Menu\Builder
-        arguments: [@knp_menu.factory, @nmc.dynamic_page.repository]
+        arguments: [@knp_menu.factory, @nmc_dynamic_page.provider_service_id]
 
-    nmc.dynamic_page.menu.main:
+    nmc_dynamic_page.menu.main:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: nmc.dynamic_page.menu_builder
+        factory_service: nmc_dynamic_page.menu_builder
         factory_method: createMainMenu
         arguments: ["@request"]
         scope: request # needed as we have the request as a dependency here

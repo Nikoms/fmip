@@ -75,7 +75,7 @@ cmf_routing:
             router.default: 200
     dynamic:
         enabled: true
-        route_provider_service_id: nmc.dynamic_page.router
+        route_provider_service_id: nmc_dynamic_page.router
 
 
 sonata_block:
