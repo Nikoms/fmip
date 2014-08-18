@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('provider_service_id')
-                ->defaultValue('nmc_dynamic_page.repository')
+                ->defaultValue('nmc_dynamic_page.page_provider')
             ->end()
         ->end()
         ;
