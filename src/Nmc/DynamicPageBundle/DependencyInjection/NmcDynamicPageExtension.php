@@ -22,6 +22,11 @@ class NmcDynamicPageExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+
+        if (isset($config['provider_service_id'])) {
+            $container->setAlias($this->getAlias() . '.provider_service_id', $config['provider_service_id']);
+        }
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
