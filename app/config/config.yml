@@ -101,4 +101,4 @@ sonata_block:
 
 
 nmc_dynamic_page:
-    provider_service_id: nmc_dynamic_page.page_of_web_provider
+    provider_service_id: nmc_dynamic_page.page_of_website_provider

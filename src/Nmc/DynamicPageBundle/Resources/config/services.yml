@@ -15,7 +15,7 @@ services:
         arguments:
             - NmcDynamicPageBundle:Page
 
-    nmc_dynamic_page.page_of_web_provider:
+    nmc_dynamic_page.page_of_website_provider:
         class: Nmc\DynamicPageBundle\Entity\PageOfWebsiteProvider
         arguments: [@nmc_dynamic_page.repository, "@=service('nmc.dynamic_website.web_finder').getWebsite().getId()"]
 
