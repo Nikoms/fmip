@@ -97,3 +97,8 @@ sonata_block:
         #sonata.media.block.gallery:
         #sonata.media.block.feature_media:
 
+
+
+
+nmc_dynamic_page:
+    provider_service_id: nmc_dynamic_page.page_of_web_provider
