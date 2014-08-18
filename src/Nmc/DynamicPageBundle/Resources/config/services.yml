@@ -15,18 +15,18 @@ services:
         arguments:
             - NmcDynamicPageBundle:Page
 
-    nmc.dynamic_page.page_finder:
-        class: Nmc\DynamicPageBundle\Service\PageFinder
-        arguments: [@nmc.dynamic_page.repository, "@=service('nmc.dynamic_website.web_finder').getWebsite().getId()"]
+#    nmc.dynamic_page.page_finder:
+#        class: Nmc\DynamicPageBundle\Service\PageFinder
+#        arguments: [@nmc.dynamic_page.repository, "@=service('nmc.dynamic_website.web_finder').getWebsite().getId()"]
 
     nmc.dynamic_page.router:
         class: Nmc\DynamicPageBundle\Routing\RouteProvider
-        arguments: [@nmc.dynamic_page.page_finder, '%nmc_dynamic_page.default.action%']
+        arguments: [@nmc.dynamic_page.repository, '%nmc_dynamic_page.default.action%']
 
 
     nmc.dynamic_page.menu_builder:
         class: Nmc\DynamicPageBundle\Menu\Builder
-        arguments: [@knp_menu.factory, @nmc.dynamic_page.page_finder]
+        arguments: [@knp_menu.factory, @nmc.dynamic_page.repository]
 
     nmc.dynamic_page.menu.main:
         class: Knp\Menu\MenuItem # the service definition requires setting the class

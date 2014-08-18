@@ -12,8 +12,7 @@ namespace Nmc\DynamicPageBundle\Entity;
 interface PageProviderInterface {
 
     /**
-     * @param int $websiteId
      * @return Page[]
      */
-    public function getPagesByWebsiteId($websiteId);
+    public function getPages();
 } 

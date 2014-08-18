@@ -9,7 +9,7 @@
 namespace Nmc\DynamicPageBundle\Routing;
 
 
-use Nmc\DynamicPageBundle\Service\PageFinderInterface;
+use Nmc\DynamicPageBundle\Entity\PageProviderInterface;
 use Symfony\Cmf\Component\Routing\RouteProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -26,18 +26,18 @@ class RouteProvider implements RouteProviderInterface{
     private $controllerAction;
 
     /**
-     * @var \Nmc\DynamicPageBundle\Service\PageFinderInterface
+     * @var PageProviderInterface
      */
-    private $pageFinder;
+    private $pageProvider;
 
 
     /**
-     * @param PageFinderInterface $pageFinder
-     * @param string $controllerAction
+     * @param PageProviderInterface $pageProvider
+     * @param $controllerAction
      */
-    public function __construct(PageFinderInterface $pageFinder, $controllerAction)
+    public function __construct(PageProviderInterface $pageProvider, $controllerAction)
     {
-        $this->pageFinder = $pageFinder;
+        $this->pageProvider = $pageProvider;
         $this->controllerAction = $controllerAction;
     }
     /**
@@ -84,7 +84,7 @@ class RouteProvider implements RouteProviderInterface{
     {
         $routeCollection = new RouteCollection();
 
-        foreach($this->pageFinder->getPages() as $page){
+        foreach($this->pageProvider->getPages() as $page){
             $config = array('page' => $page);
             $routeCollection->add($page->getLocale() . '_' . $page->getId(), new Route($page->getPath(), array('_controller' => $this->controllerAction) + $config));
         }

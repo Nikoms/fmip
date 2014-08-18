@@ -13,12 +13,11 @@ use Doctrine\ORM\EntityRepository;
 class PageRepository extends EntityRepository implements PageProviderInterface
 {
     /**
-     * @param int $websiteId
      * @return Page[]
      */
-    public function getPagesByWebsiteId($websiteId)
+    public function getPages()
     {
-        return $this->findBy(array('websiteId' => $websiteId));
+        return $this->findAll();
     }
 
 }
