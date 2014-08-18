@@ -4,7 +4,7 @@ parameters:
 services:
 
     nmc.dynamic_website.listener.request_listener:
-        class: Nmc\DynamicPageBundle\Listener\RequestListener
+        class: Nmc\DynamicPageBundle\Listener\RequestLocalListener
         tags:
             - { name: kernel.event_listener, event: kernel.request }
 

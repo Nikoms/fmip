@@ -11,7 +11,7 @@ namespace Nmc\DynamicPageBundle\Listener;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class RequestListener
+class RequestLocalListener
 {
     public function onKernelRequest(GetResponseEvent $event)
     {
